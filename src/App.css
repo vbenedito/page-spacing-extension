@@ -15,7 +15,7 @@
 }
 
 .page-ruler-line {
-  position: fixed;
+  position: absolute;
   z-index: 9999;
   cursor: move;
 }

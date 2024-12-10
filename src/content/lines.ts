@@ -6,7 +6,8 @@ export function addLine(type: "horizontal" | "vertical") {
   line.className = `page-ruler-line page-ruler-line--${type}`;
 
   if (type === "horizontal") {
-    line.style.top = "50px";
+    const viewportMiddleY = window.innerHeight / 2;
+    line.style.top = `${viewportMiddleY + window.scrollY}px`;
     line.style.left = "0";
   } else {
     line.style.left = "50px";
