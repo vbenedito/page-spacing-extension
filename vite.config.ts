@@ -12,6 +12,10 @@ export default defineConfig({
           src: "manifest.json", // Copiar manifest.json
           dest: ".",
         },
+        {
+          src: "src/App.css", // Copiar manifest.json
+          dest: ".",
+        },
       ],
     }),
   ],
