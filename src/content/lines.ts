@@ -1,6 +1,3 @@
-import { calculateLinesDistance } from "../utils/distanceLine";
-import { isKeyPressed, state } from "./state";
-
 let lineIdCounter = 0;
 
 export function addLine(type: "horizontal" | "vertical") {
@@ -22,15 +19,6 @@ export function addLine(type: "horizontal" | "vertical") {
     line.style.width = "2px";
     line.style.height = "100%";
   }
-
-  // Handle click to select line
-  line.addEventListener("click", () => {
-    if (isKeyPressed.value) {
-      handleLineSelection(line);
-    } else {
-      console.log("Key not pressed, ignoring click.");
-    }
-  });
 
   addDragBehavior(line, type);
   document.body.appendChild(line);
@@ -62,16 +50,4 @@ function addDragBehavior(line: HTMLElement, type: "horizontal" | "vertical") {
   });
 
   document.addEventListener("mouseup", () => (isDragging = false));
-}
-
-function handleLineSelection(line: HTMLElement) {
-  if (!state.firstSelectedLine) {
-    state.firstSelectedLine = line;
-    console.log(`First line selected: ${line.dataset.id}`);
-  } else if (!state.secondSelectedLine && line !== state.firstSelectedLine) {
-    state.secondSelectedLine = line;
-    console.log(`Second line selected: ${line.dataset.id}`);
-    calculateLinesDistance(state.firstSelectedLine, state.secondSelectedLine);
-    state.resetSelections();
-  }
 }
