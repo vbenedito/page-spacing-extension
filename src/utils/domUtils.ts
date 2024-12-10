@@ -4,6 +4,6 @@ export function styleButton(
   color: string
 ) {
   button.style.bottom = `${bottom}px`;
-  button.className = "button";
+  button.className = "page-ruler-button";
   button.style.backgroundColor = color;
 }

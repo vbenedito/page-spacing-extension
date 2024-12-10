@@ -3,22 +3,14 @@ let lineIdCounter = 0;
 export function addLine(type: "horizontal" | "vertical") {
   const line = document.createElement("div");
   line.dataset.id = `line-${lineIdCounter++}`;
-  line.className = "page-ruler-line";
-  line.style.position = "fixed";
-  line.style.zIndex = "9999";
-  line.style.cursor = "move";
-  line.style.backgroundColor = type === "horizontal" ? "red" : "blue";
+  line.className = `page-ruler-line page-ruler-line--${type}`;
 
   if (type === "horizontal") {
     line.style.top = "50px";
     line.style.left = "0";
-    line.style.width = "100%";
-    line.style.height = "2px";
   } else {
     line.style.left = "50px";
     line.style.top = "0";
-    line.style.width = "2px";
-    line.style.height = "100%";
   }
 
   addDragBehavior(line, type);
