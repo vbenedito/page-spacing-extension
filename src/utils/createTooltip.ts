@@ -7,22 +7,12 @@ export function createTooltip(
   const tooltip = document.createElement("div");
   tooltip.textContent = text;
   tooltip.className = "tooltip";
-  // tooltip.style.position = "absolute";
-  // tooltip.style.whiteSpace = "pre";
   tooltip.style.left = `${x}px`;
   tooltip.style.top = `${y}px`;
-  // tooltip.style.padding = "5px 10px";
-  // tooltip.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-  // tooltip.style.color = "white";
-  // tooltip.style.borderRadius = "5px";
-  // tooltip.style.fontSize = "14px";
-  // tooltip.style.zIndex = "9999";
-  // tooltip.style.pointerEvents = "none";
-  // tooltip.style.transform = "translate(-50%, -50%)";
   document.body.appendChild(tooltip);
 
   if (!shouldBeRemoved) return;
-  setTimeout(() => tooltip.remove(), 30000);
+  setTimeout(() => tooltip.remove(), 3000);
 }
 
 // export function calculateLinesDistance(line1: HTMLElement, line2: HTMLElement) {

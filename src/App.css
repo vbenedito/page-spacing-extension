@@ -31,3 +31,15 @@
   width: 2px;
   height: 100%;
 }
+
+.tooltip {
+  position: absolute;
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 6px;
+  font-size: 13px;
+  z-index: 9999;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
