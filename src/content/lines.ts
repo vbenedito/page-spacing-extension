@@ -3,6 +3,7 @@ let lineIdCounter = 0;
 export function addLine(type: "horizontal" | "vertical") {
   const line = document.createElement("div");
   line.dataset.id = `line-${lineIdCounter++}`;
+  line.className = "page-ruler-line";
   line.style.position = "fixed";
   line.style.zIndex = "9999";
   line.style.cursor = "move";

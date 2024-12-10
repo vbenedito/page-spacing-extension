@@ -1,0 +1,15 @@
+.button {
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  position: fixed !important;
+  left: 10px !important;
+  z-index: 9999 !important;
+  color: white !important;
+  border: none !important;
+  padding: 10px !important;
+  cursor: pointer !important;
+}
+
+.button:hover {
+  filter: brightness(0.9);
+}
