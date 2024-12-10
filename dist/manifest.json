@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Page Ruler",
+  "name": "Pixel Perfect Extension",
   "version": "0.0.1",
   "description": "Easily measure pixel-perfect distances between elements on any webpage with intuitive tools. Ideal for developers, designers, and QA",
   "permissions": ["activeTab", "scripting"],
