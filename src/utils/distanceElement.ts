@@ -5,7 +5,7 @@ function showDistanceElementsTooltip(
 ): void {
   const distanceLabel: HTMLDivElement = document.createElement("div");
   distanceLabel.textContent = `${distance}px`;
-  distanceLabel.style.position = "absolute";
+  distanceLabel.style.position = "fixed";
   distanceLabel.style.backgroundColor = "black";
   distanceLabel.style.color = "white";
   distanceLabel.style.padding = "2px 5px";

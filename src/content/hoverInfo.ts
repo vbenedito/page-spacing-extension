@@ -1,45 +1,38 @@
-import { createTooltip } from "../utils/distanceLine";
+import { createTooltip } from "../utils/createTooltip";
+import { state } from "./state";
 
-export const setupHoverInfo = () => {
-  let isActive = false;
-
-  // Ativar exibição de informações ao pressionar Meta + Shift
-  document.addEventListener("keydown", () => {
-    isActive = true;
-    console.log("Meta and Shift keys pressed together. Hover info activated.");
-  });
-
-  // Desativar exibição de informações ao soltar qualquer tecla
-  document.addEventListener("keyup", () => {
-    isActive = false;
-    console.log("Hover info deactivated.");
-  });
-
+export const setupHoverInfo = (event: MouseEvent) => {
   // Listener para exibir informações no hover
-  document.addEventListener("mouseover", (event: MouseEvent) => {
-    if (!isActive) return;
+  // document.addEventListener("mouseover", (event: MouseEvent) => {
+  if (!state.isShiftPressed) return;
 
-    const element = event.target as HTMLElement;
-    if (!element) return;
+  const element = event.target as HTMLElement;
+  if (!element) return;
 
-    const rect = element.getBoundingClientRect();
-    const styles = window.getComputedStyle(element);
+  const rect = element.getBoundingClientRect();
+  const styles = window.getComputedStyle(element);
 
-    const info = {
-      tagName: element.tagName,
-      height: styles.height,
-      width: styles.width,
-      backgroundColor: styles.backgroundColor,
-      color: styles.color,
-      fontSize: styles.fontSize,
-    };
+  const info = {
+    tagName: element.tagName,
+    backgroundColor: styles.backgroundColor,
+    color: styles.color,
+    fontSize: styles.fontSize,
+    padding: styles.padding,
+    margin: styles.margin,
+    gap: styles.gap,
+  };
 
-    console.log(info, rect);
-
-    createTooltip(
-      `Tag: ${info.tagName}\nSize: ${info.width} x ${info.height}\nBackground: ${info.backgroundColor}\nColor: ${info.color}\nFont Size: ${info.fontSize}`,
-      rect.x + rect.width / 2,
-      rect.y - 20 // Posicionar a tooltip acima do elemento
-    );
-  });
+  createTooltip(
+    `Tag: ${info.tagName}
+      Background: ${info.backgroundColor}
+      Color: ${info.color}
+      Font Size: ${info.fontSize}
+      Padding: ${info.padding}
+      Margin: ${info.margin}
+      Gap: ${info.gap}  
+    `,
+    rect.x + rect.width / 2,
+    rect.y - 20 // Posicionar a tooltip acima do elemento
+  );
+  // });
 };

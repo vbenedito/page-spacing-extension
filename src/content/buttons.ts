@@ -3,12 +3,12 @@ import { addLine } from "./lines";
 
 const addHorizontalLineButton = document.createElement("button");
 addHorizontalLineButton.textContent = "New horizontal line";
-styleButton(addHorizontalLineButton, 10, "blue");
+styleButton(addHorizontalLineButton, 10, "red");
 addHorizontalLineButton.addEventListener("click", () => addLine("horizontal"));
 
 const addVerticalLineButton = document.createElement("button");
 addVerticalLineButton.textContent = "New vertical line";
-styleButton(addVerticalLineButton, 50, "green");
+styleButton(addVerticalLineButton, 50, "black");
 addVerticalLineButton.addEventListener("click", () => addLine("vertical"));
 
 export const createButtons = () => {

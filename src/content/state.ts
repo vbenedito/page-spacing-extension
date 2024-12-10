@@ -2,6 +2,7 @@ export const state = {
   firstSelectedLine: null as HTMLElement | null,
   secondSelectedLine: null as HTMLElement | null,
   isCommandPressed: false,
+  isShiftPressed: false,
   selectedElements: [] as HTMLElement[],
 
   resetSelections() {

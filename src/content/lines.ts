@@ -3,7 +3,7 @@ let lineIdCounter = 0;
 export function addLine(type: "horizontal" | "vertical") {
   const line = document.createElement("div");
   line.dataset.id = `line-${lineIdCounter++}`;
-  line.style.position = "absolute";
+  line.style.position = "fixed";
   line.style.zIndex = "9999";
   line.style.cursor = "move";
   line.style.backgroundColor = type === "horizontal" ? "red" : "blue";

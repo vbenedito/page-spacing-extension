@@ -4,29 +4,45 @@ import { state } from "./state";
 
 // Configurar listener de teclas
 export function setupKeyListeners(): void {
-  const allowedKeys = ["Tab", "Meta", "Alt"];
+  const allowedClickKey = ["Meta", "Control"];
+  const allowerHoverKey = ["Shift"];
 
   document.addEventListener("keydown", (e: KeyboardEvent) => {
-    if (allowedKeys.includes(e.key) || e.ctrlKey) {
-      state.isCommandPressed = true;
-      console.log("Command key pressed.");
+    if (allowerHoverKey.includes(e.key)) {
+      state.isShiftPressed = true;
+      console.log("shift key pressed.");
+    }
 
-      if ((e.key === "Meta" || e.ctrlKey) && e.shiftKey) {
-        console.log(
-          "Meta and Shift keys pressed together. Hover info activated."
-        );
-        setupHoverInfo();
-      }
+    if (allowedClickKey.includes(e.key)) {
+      state.isCommandPressed = true;
+      console.log("Command/Control key pressed.");
     }
   });
 
   document.addEventListener("keyup", (e: KeyboardEvent) => {
-    if (!e.metaKey) {
+    if (allowerHoverKey.includes(e.key)) {
+      state.isShiftPressed = false;
+      console.log("shift key released.");
+    }
+
+    if (allowedClickKey.includes(e.key)) {
       state.isCommandPressed = false;
       state.selectedElements = [];
-      console.log("Command key released.");
+      console.log("Command/Control key released.");
     }
   });
+}
+
+export function setupHoverListener(): void {
+  document.addEventListener(
+    "mouseover",
+    (event: MouseEvent) => {
+      if (state.isShiftPressed) {
+        setupHoverInfo(event);
+      }
+    },
+    { capture: true }
+  );
 }
 
 // Configurar listener de cliques
