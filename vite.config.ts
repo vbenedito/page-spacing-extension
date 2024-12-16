@@ -25,7 +25,7 @@ export default defineConfig({
       input: {
         popup: resolve(__dirname, "popup.html"),
         background: resolve(__dirname, "src/background.ts"), // Adicione o arquivo background.ts aqui
-        contentScript: resolve(__dirname, "src/contentScript.ts"),
+        contentScript: resolve(__dirname, "src/scripts/contentScript.ts"),
       },
       output: {
         entryFileNames: "[name].js",
