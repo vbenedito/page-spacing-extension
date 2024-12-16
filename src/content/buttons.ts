@@ -11,7 +11,7 @@ addVerticalLineButton.textContent = "New vertical line";
 styleButton(addVerticalLineButton, 60, "green");
 addVerticalLineButton.addEventListener("click", () => addLine("vertical"));
 
-export const createButtons = () => {
+export const createLinesButtons = () => {
   document.body.appendChild(addHorizontalLineButton);
   document.body.appendChild(addVerticalLineButton);
   console.log("Buttons added to the page.");
