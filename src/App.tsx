@@ -19,7 +19,9 @@ function App() {
         <button onClick={() => activeFeatures("active_hover_inspect")}>
           Hover Inspect
         </button>
-        <button>measure distance</button>
+        <button onClick={() => activeFeatures("active_measure_distance")}>
+          measure distance
+        </button>
       </div>
     </div>
   );

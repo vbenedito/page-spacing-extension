@@ -1,4 +1,4 @@
-import { setupHoverInfo } from "./hoverInfo";
+// import { setupHoverInfo } from "./hoverInfo";
 import { handleElementClick } from "./selection";
 import { state } from "./state";
 
@@ -33,17 +33,17 @@ export function setupKeyListeners(): void {
   });
 }
 
-export function setupHoverListener(): void {
-  document.addEventListener(
-    "mouseover",
-    (event: MouseEvent) => {
-      if (state.isShiftPressed) {
-        setupHoverInfo(event);
-      }
-    },
-    { capture: true }
-  );
-}
+// export function setupHoverListener(): void {
+//   document.addEventListener(
+//     "mouseenter",
+//     (event: MouseEvent) => {
+//       if (state.isShiftPressed) {
+//         setupHoverInfo(event);
+//       }
+//     },
+//     { capture: true }
+//   );
+// }
 
 // Configurar listener de cliques
 export function setupClickListener(): void {

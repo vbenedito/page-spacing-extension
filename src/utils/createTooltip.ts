@@ -1,18 +1,29 @@
 export function createTooltip(
-  text: string,
+  content: string,
   x: number,
-  y: number,
-  shouldBeRemoved = true
-) {
+  y: number
+): HTMLElement {
   const tooltip = document.createElement("div");
-  tooltip.textContent = text;
-  tooltip.className = "tooltip";
+  tooltip.textContent = content;
+  tooltip.style.position = "fixed";
   tooltip.style.left = `${x}px`;
   tooltip.style.top = `${y}px`;
+  tooltip.style.padding = "8px";
+  tooltip.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+  tooltip.style.color = "white";
+  tooltip.style.borderRadius = "4px";
+  tooltip.style.fontSize = "12px";
+  tooltip.style.pointerEvents = "none";
+  tooltip.style.whiteSpace = "pre-line"; // Garante que \n seja interpretado
+  tooltip.dataset.ignoreTooltip = "true"; // Evitar que o listener capture o tooltip
   document.body.appendChild(tooltip);
+  return tooltip;
+}
 
-  if (!shouldBeRemoved) return;
-  setTimeout(() => tooltip.remove(), 3000);
+export function removeTooltip(tooltip: HTMLElement): void {
+  if (tooltip.parentNode) {
+    tooltip.parentNode.removeChild(tooltip);
+  }
 }
 
 // export function calculateLinesDistance(line1: HTMLElement, line2: HTMLElement) {
