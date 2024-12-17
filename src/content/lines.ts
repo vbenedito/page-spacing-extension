@@ -10,8 +10,13 @@ export function addLine(type: "horizontal" | "vertical") {
     line.style.top = `${viewportMiddleY + window.scrollY}px`;
     line.style.left = "0";
   } else {
+    const pageHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    );
     line.style.left = "50px";
     line.style.top = "0";
+    line.style.height = `${pageHeight}px`;
   }
 
   addDragBehavior(line, type);

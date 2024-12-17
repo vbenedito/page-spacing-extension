@@ -14,8 +14,8 @@ export function createTooltip(
   tooltip.style.borderRadius = "4px";
   tooltip.style.fontSize = "12px";
   tooltip.style.pointerEvents = "none";
-  tooltip.style.whiteSpace = "pre-line"; // Garante que \n seja interpretado
-  tooltip.dataset.ignoreTooltip = "true"; // Evitar que o listener capture o tooltip
+  tooltip.style.whiteSpace = "pre-line";
+  tooltip.dataset.ignoreTooltip = "true";
   document.body.appendChild(tooltip);
   return tooltip;
 }
