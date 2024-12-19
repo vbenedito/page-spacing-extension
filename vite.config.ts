@@ -9,11 +9,11 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: "manifest.json", // Copiar manifest.json
+          src: "manifest.json",
           dest: ".",
         },
         {
-          src: "src/App.css", // Copiar manifest.json
+          src: "src/App.css",
           dest: ".",
         },
       ],
@@ -24,7 +24,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         popup: resolve(__dirname, "popup.html"),
-        background: resolve(__dirname, "src/background.ts"), // Adicione o arquivo background.ts aqui
+        background: resolve(__dirname, "src/background.ts"),
         contentScript: resolve(__dirname, "src/scripts/contentScript.ts"),
       },
       output: {
