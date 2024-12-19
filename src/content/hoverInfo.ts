@@ -29,7 +29,6 @@ export function setupHoverListener(): void {
       gap: styles.gap,
     };
 
-    // Atualiza ou cria tooltip
     if (currentTooltip) {
       currentTooltip.innerHTML = `
         <div><strong>Tag</strong>: ${info.tagName}</div>

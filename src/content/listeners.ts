@@ -1,8 +1,6 @@
-// import { setupHoverInfo } from "./hoverInfo";
 import { handleElementClick } from "./selection";
 import { state } from "./state";
 
-// Configurar listener de teclas
 export function setupKeyListeners(): void {
   const allowedClickKey = ["Meta", "Control"];
   const allowerHoverKey = ["Shift"];
@@ -33,19 +31,6 @@ export function setupKeyListeners(): void {
   });
 }
 
-// export function setupHoverListener(): void {
-//   document.addEventListener(
-//     "mouseenter",
-//     (event: MouseEvent) => {
-//       if (state.isShiftPressed) {
-//         setupHoverInfo(event);
-//       }
-//     },
-//     { capture: true }
-//   );
-// }
-
-// Configurar listener de cliques
 export function setupClickListener(): void {
   document.addEventListener(
     "click",
