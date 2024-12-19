@@ -1,4 +1,5 @@
 import "./App.css";
+import { ACTIONS } from "./utils/constants";
 
 function App() {
   const activeFeatures = (message: string) => {
@@ -13,14 +14,14 @@ function App() {
 
       <span className="buttons-title">Buttons to active features</span>
       <div className="buttons-container">
-        <button onClick={() => activeFeatures("active_lines_buttons")}>
+        <button onClick={() => activeFeatures(ACTIONS.activeLinesButton)}>
           Lines
         </button>
-        <button onClick={() => activeFeatures("active_hover_inspect")}>
+        <button onClick={() => activeFeatures(ACTIONS.activeHoverInspect)}>
           Hover Inspect
         </button>
-        <button onClick={() => activeFeatures("active_measure_distance")}>
-          measure distance
+        <button onClick={() => activeFeatures(ACTIONS.activeMeasureDistance)}>
+          Measure Distance
         </button>
       </div>
     </div>
