@@ -34,7 +34,6 @@ function showDistanceElementsTooltip(
 
   document.body.appendChild(distanceLabel);
 
-  // Remove the label after a few seconds
   setTimeout(() => {
     distanceLabel.remove();
   }, 3000);
@@ -47,11 +46,28 @@ export function calculateElementDistance(
   const rect1 = element1.getBoundingClientRect();
   const rect2 = element2.getBoundingClientRect();
 
-  // Determine the closest edges
-  const topDistance = Math.abs(rect1.top - rect2.bottom); // From top of element1 to bottom of element2
-  const bottomDistance = Math.abs(rect1.bottom - rect2.top); // From bottom of element1 to top of element2
-  const leftDistance = Math.abs(rect1.left - rect2.right); // From left of element1 to right of element2
-  const rightDistance = Math.abs(rect1.right - rect2.left); // From right of element1 to left of element2
+  // Check if element1 is a child of element2 or vice versa
+  const isChildParentRelation =
+    element1.contains(element2) || element2.contains(element1);
+
+  let topDistance: number,
+    bottomDistance: number,
+    leftDistance: number,
+    rightDistance: number;
+
+  if (isChildParentRelation) {
+    // Calculate distances considering parent-child relation
+    topDistance = Math.abs(rect1.top - rect2.top);
+    bottomDistance = Math.abs(rect1.bottom - rect2.bottom);
+    leftDistance = Math.abs(rect1.left - rect2.left);
+    rightDistance = Math.abs(rect1.right - rect2.right);
+  } else {
+    // Default calculation for unrelated elements
+    topDistance = Math.abs(rect1.top - rect2.bottom); // From top of element1 to bottom of element2
+    bottomDistance = Math.abs(rect1.bottom - rect2.top); // From bottom of element1 to top of element2
+    leftDistance = Math.abs(rect1.left - rect2.right); // From left of element1 to right of element2
+    rightDistance = Math.abs(rect1.right - rect2.left); // From right of element1 to left of element2
+  }
 
   // Find the minimum distance
   const distances = [
