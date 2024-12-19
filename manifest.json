@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Pixel Perfect Extension",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Easily measure pixel-perfect distances between elements on any webpage with intuitive tools. Ideal for developers, designers, and QA",
   "permissions": ["activeTab", "scripting"],
   "host_permissions": ["<all_urls>"],
