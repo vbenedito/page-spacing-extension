@@ -13,7 +13,7 @@ export default defineConfig({
           dest: ".",
         },
         {
-          src: "src/App.css",
+          src: "src/styles/App.css",
           dest: ".",
         },
       ],
