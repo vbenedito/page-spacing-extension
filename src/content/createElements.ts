@@ -9,6 +9,7 @@ export const createMainContainer = () => {
   divRulerElement.style.zIndex = "2147483647";
   divRulerElement.style.width = "100vw";
   divRulerElement.style.height = "100vh";
+  divRulerElement.style.pointerEvents = "auto";
 
   document.body.appendChild(divRulerElement);
 };
@@ -19,14 +20,17 @@ export const createCanvasConfig = (konva: KonvaType) => {
 
   const stage = new konva.Stage({
     container: "ruler-container",
-    width: width,
-    height: height,
+    width,
+    height,
   });
 
-  const horizontalLayer = new konva.Layer();
-  const verticalLayer = new konva.Layer();
-  const fixedLinesLayer = new konva.Layer(); // Camada para linhas fixadas
-  stage.add(horizontalLayer, verticalLayer, fixedLinesLayer);
+  const mainLayer = new konva.Layer();
+  const highlightLayer = new konva.Layer();
 
-  return { stage, horizontalLayer, verticalLayer, fixedLinesLayer };
+  mainLayer.listening();
+
+  stage.add(mainLayer);
+  stage.add(highlightLayer);
+
+  return { stage, mainLayer, highlightLayer };
 };

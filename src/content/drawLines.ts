@@ -3,43 +3,57 @@ import { Layer } from "konva/lib/Layer";
 import { Stage } from "konva/lib/Stage";
 import { KonvaType } from "../utils/konvaInstance";
 import { eventsHelper } from "./events";
+import { Line } from "konva/lib/shapes/Line";
 
 const rulerSize = 30;
 
+export const handleTempLines = ({
+  tempLine,
+  isVisible,
+  points,
+}: {
+  tempLine: Line;
+  isVisible: boolean;
+  points?: number[];
+}) => {
+  tempLine.visible(isVisible);
+  if (points) {
+    tempLine.points(points);
+  }
+};
+
 export const drawTempVerticalLine = ({
   stage,
-  horizontalLayer,
+  mainLayer,
 }: {
   stage: Stage;
-  horizontalLayer: Layer;
+  mainLayer: Layer;
 }) => {
-  // Linha temporária vertical
   const tempVerticalLine = new Konva.Line({
     points: [0, rulerSize, 0, stage.height()],
     stroke: "#00f",
     strokeWidth: 1,
     visible: false,
   });
-  horizontalLayer.add(tempVerticalLine);
+  mainLayer.add(tempVerticalLine);
 
   return { tempVerticalLine };
 };
 
 export const drawTempHorizontalLine = ({
   stage,
-  verticalLayer,
+  mainLayer,
 }: {
   stage: Stage;
-  verticalLayer: Layer;
+  mainLayer: Layer;
 }) => {
-  // Linha temporária horizontal
   const tempHorizontalLine = new Konva.Line({
     points: [rulerSize, 0, stage.width(), 0],
     stroke: "#00f",
     strokeWidth: 1,
     visible: false,
   });
-  verticalLayer.add(tempHorizontalLine);
+  mainLayer.add(tempHorizontalLine);
 
   return { tempHorizontalLine };
 };
@@ -48,13 +62,15 @@ export const drawFixedVerticalLine = ({
   konva,
   mouseX,
   stage,
-  fixedLinesLayer,
+  mainLayer,
+  highlightLayer,
 }: {
   konva: KonvaType;
   mouseX: number;
   mouseY: number;
   stage: Stage;
-  fixedLinesLayer: Layer;
+  mainLayer: Layer;
+  highlightLayer: Layer;
 }) => {
   const fixedVerticalLine = new konva.Line({
     points: [mouseX, rulerSize, mouseX, stage.height()],
@@ -71,6 +87,28 @@ export const drawFixedVerticalLine = ({
 
   eventsHelper({
     component: fixedVerticalLine,
+    eventName: "dragstart",
+    callback: () => {
+      if (highlightLayer) {
+        highlightLayer.hide();
+        stage.batchDraw();
+      }
+    },
+  });
+
+  eventsHelper({
+    component: fixedVerticalLine,
+    eventName: "dragend",
+    callback: () => {
+      if (highlightLayer) {
+        highlightLayer.show();
+        stage.batchDraw();
+      }
+    },
+  });
+
+  eventsHelper({
+    component: fixedVerticalLine,
     callback: () => (stage.container().style.cursor = "pointer"),
     eventName: "mouseenter",
   });
@@ -81,26 +119,27 @@ export const drawFixedVerticalLine = ({
     eventName: "mouseleave",
   });
 
-  fixedLinesLayer.add(fixedVerticalLine);
-  fixedLinesLayer.draw();
+  mainLayer.add(fixedVerticalLine);
+  mainLayer.draw();
 };
 
 export const drawFixedHorizontalLine = ({
   konva,
   mouseY,
   stage,
-  fixedLinesLayer,
+  mainLayer,
 }: {
   konva: KonvaType;
   mouseY: number;
   stage: Stage;
-  fixedLinesLayer: Layer;
+  mainLayer: Layer;
 }) => {
   const fixedHorizontalLine = new konva.Line({
     points: [rulerSize, mouseY, stage.width(), mouseY],
     stroke: "#f00",
     strokeWidth: 2,
     draggable: true,
+    listening: true,
     dragBoundFunc: function (pos) {
       return {
         y: pos.y,
@@ -121,6 +160,6 @@ export const drawFixedHorizontalLine = ({
     eventName: "mouseleave",
   });
 
-  fixedLinesLayer.add(fixedHorizontalLine);
-  fixedLinesLayer.draw();
+  mainLayer.add(fixedHorizontalLine);
+  mainLayer.draw();
 };

@@ -6,10 +6,10 @@ const rulerHorizontalSize = 30;
 const rulerVerticalSize = 35;
 export function drawHorizontalRuler({
   stage,
-  horizontalLayer,
+  mainLayer,
 }: {
   stage: Stage;
-  horizontalLayer: Layer;
+  mainLayer: Layer;
 }) {
   const background = new Konva.Rect({
     x: 0,
@@ -18,7 +18,7 @@ export function drawHorizontalRuler({
     height: rulerHorizontalSize,
     fill: "#f0f0f0",
   });
-  horizontalLayer.add(background);
+  mainLayer.add(background);
 
   const step = 10;
   const bigStep = 50;
@@ -30,7 +30,7 @@ export function drawHorizontalRuler({
       stroke: "#aaa",
       strokeWidth: 1,
     });
-    horizontalLayer.add(line);
+    mainLayer.add(line);
 
     if (x % bigStep === 0) {
       const text = new Konva.Text({
@@ -40,19 +40,19 @@ export function drawHorizontalRuler({
         fontSize: 8,
         fill: "#555",
       });
-      horizontalLayer.add(text);
+      mainLayer.add(text);
     }
   }
 
-  horizontalLayer.draw();
+  mainLayer.draw();
 }
 
 export function drawVerticalRuler({
   stage,
-  verticalLayer,
+  mainLayer,
 }: {
   stage: Stage;
-  verticalLayer: Layer;
+  mainLayer: Layer;
 }) {
   const background = new Konva.Rect({
     x: 0,
@@ -61,7 +61,7 @@ export function drawVerticalRuler({
     height: stage.height(),
     fill: "#f0f0f0",
   });
-  verticalLayer.add(background);
+  mainLayer.add(background);
 
   const step = 10;
   const bigStep = 50;
@@ -73,7 +73,7 @@ export function drawVerticalRuler({
       stroke: "#aaa",
       strokeWidth: 1,
     });
-    verticalLayer.add(line);
+    mainLayer.add(line);
 
     if (y % bigStep === 0) {
       const text = new Konva.Text({
@@ -83,9 +83,9 @@ export function drawVerticalRuler({
         fontSize: 8,
         fill: "#555",
       });
-      verticalLayer.add(text);
+      mainLayer.add(text);
     }
   }
 
-  verticalLayer.draw();
+  mainLayer.draw();
 }

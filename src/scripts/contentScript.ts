@@ -9,6 +9,7 @@ import {
   drawTempVerticalLine,
 } from "../content/drawLines";
 import { mouseClickEvent, mouseMoveEvent } from "../content/events";
+import { drawHighlight } from "../content/drawHighlight";
 
 (() => {
   const createCanvas = () => {
@@ -16,43 +17,45 @@ import { mouseClickEvent, mouseMoveEvent } from "../content/events";
 
     const rulerSize = 30;
 
-    const { stage, horizontalLayer, verticalLayer, fixedLinesLayer } =
-      createCanvasConfig(Konva);
+    const { stage, mainLayer, highlightLayer } = createCanvasConfig(Konva);
 
-    drawHorizontalRuler({ stage, horizontalLayer });
-    drawVerticalRuler({ stage, verticalLayer });
+    drawHorizontalRuler({ stage, mainLayer });
+    drawVerticalRuler({ stage, mainLayer });
 
     const { tempVerticalLine } = drawTempVerticalLine({
       stage,
-      horizontalLayer,
+      mainLayer,
     });
     const { tempHorizontalLine } = drawTempHorizontalLine({
       stage,
-      verticalLayer,
+      mainLayer,
     });
 
-    // Atualiza a posição da linha temporária vertical ao mover o mouse na régua horizontal
     mouseMoveEvent({
-      horizontalLayer,
+      mainLayer,
       rulerSize,
       stage,
       tempHorizontalLine,
       tempVerticalLine,
-      verticalLayer,
-      konva: Konva,
     });
 
-    // Adiciona uma linha fixa vertical ao clicar na régua horizontal
-    mouseClickEvent({ fixedLinesLayer, konva: Konva, rulerSize, stage });
+    mouseClickEvent({
+      mainLayer,
+      konva: Konva,
+      rulerSize,
+      stage,
+      highlightLayer,
+    });
 
-    // Atualiza ao redimensionar a janela
+    drawHighlight({ highlightLayer, rulerSize, stage });
+
     window.addEventListener("resize", () => {
       stage.width(window.innerWidth);
       stage.height(window.innerHeight);
-      horizontalLayer.clear();
-      verticalLayer.clear();
-      drawHorizontalRuler({ stage, horizontalLayer });
-      drawVerticalRuler({ stage, verticalLayer });
+      mainLayer.clear();
+      mainLayer.clear();
+      drawHorizontalRuler({ stage, mainLayer });
+      drawVerticalRuler({ stage, mainLayer });
     });
   };
 

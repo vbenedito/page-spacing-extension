@@ -2,7 +2,11 @@ import { Layer } from "konva/lib/Layer";
 import { Line } from "konva/lib/shapes/Line";
 import { Stage } from "konva/lib/Stage";
 import { KonvaType } from "../utils/konvaInstance";
-import { drawFixedHorizontalLine, drawFixedVerticalLine } from "./drawLines";
+import {
+  drawFixedHorizontalLine,
+  drawFixedVerticalLine,
+  handleTempLines,
+} from "./drawLines";
 
 type LinesProps = Line<{
   points: number[];
@@ -15,9 +19,7 @@ interface MouseEventsProps {
   stage: Stage;
   tempHorizontalLine: LinesProps;
   tempVerticalLine: LinesProps;
-  horizontalLayer: Layer;
-  verticalLayer: Layer;
-  konva: KonvaType;
+  mainLayer: Layer;
   rulerSize: number;
 }
 
@@ -38,8 +40,7 @@ export const mouseMoveEvent = ({
   tempHorizontalLine,
   tempVerticalLine,
   rulerSize,
-  horizontalLayer,
-  verticalLayer,
+  mainLayer,
 }: MouseEventsProps) => {
   stage.on("mousemove", () => {
     const pointerPosition = stage.getPointerPosition();
@@ -48,24 +49,31 @@ export const mouseMoveEvent = ({
       const mouseX = pointerPosition.x;
       const mouseY = pointerPosition.y;
 
-      // Exibe a linha temporária somente ao passar o mouse na régua horizontal
       if (mouseY <= rulerSize) {
-        tempVerticalLine.visible(true);
-        tempVerticalLine.points([mouseX, rulerSize, mouseX, stage.height()]);
+        handleTempLines({
+          tempLine: tempVerticalLine,
+          isVisible: true,
+          points: [mouseX, rulerSize, mouseX, stage.height()],
+        });
       } else {
-        tempVerticalLine.visible(false);
+        handleTempLines({
+          tempLine: tempVerticalLine,
+          isVisible: false,
+        });
       }
 
-      // Exibe a linha temporária somente ao passar o mouse na régua vertical
       if (mouseX <= rulerSize) {
-        tempHorizontalLine.visible(true);
-        tempHorizontalLine.points([rulerSize, mouseY, stage.width(), mouseY]);
+        handleTempLines({
+          tempLine: tempHorizontalLine,
+          isVisible: true,
+          points: [rulerSize, mouseY, stage.width(), mouseY],
+        });
       } else {
-        tempHorizontalLine.visible(false);
+        handleTempLines({ tempLine: tempHorizontalLine, isVisible: false });
       }
 
-      horizontalLayer.batchDraw();
-      verticalLayer.batchDraw();
+      mainLayer.batchDraw();
+      mainLayer.batchDraw();
     }
   });
 };
@@ -73,13 +81,15 @@ export const mouseMoveEvent = ({
 export const mouseClickEvent = ({
   stage,
   rulerSize,
-  fixedLinesLayer,
+  mainLayer,
   konva,
+  highlightLayer,
 }: {
   stage: Stage;
   rulerSize: number;
-  fixedLinesLayer: Layer;
+  mainLayer: Layer;
   konva: KonvaType;
+  highlightLayer: Layer;
 }) => {
   stage.on("click", () => {
     const pointerPosition = stage.getPointerPosition();
@@ -88,20 +98,19 @@ export const mouseClickEvent = ({
       const mouseX = pointerPosition.x;
       const mouseY = pointerPosition.y;
 
-      // Adiciona uma linha fixa vertical ao clicar na régua horizontal
       if (mouseY <= rulerSize) {
         drawFixedVerticalLine({
-          fixedLinesLayer,
+          mainLayer,
           konva,
           mouseX,
           mouseY,
           stage,
+          highlightLayer,
         });
       }
 
-      // Adiciona uma linha fixa horizontal ao clicar na régua vertical
       if (mouseX <= rulerSize) {
-        drawFixedHorizontalLine({ fixedLinesLayer, konva, mouseY, stage });
+        drawFixedHorizontalLine({ mainLayer, konva, mouseY, stage });
       }
     }
   });
