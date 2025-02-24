@@ -9,7 +9,8 @@ import {
   drawTempVerticalLine,
 } from "../content/drawLines";
 import { mouseClickEvent, mouseMoveEvent } from "../content/events";
-import { drawHighlight } from "../content/drawHighlight";
+import { drawHoverHighlight } from "../content/drawHighlight";
+// import { configMeasureElementsDistance } from "../utils/distanceElement";
 
 (() => {
   const createCanvas = () => {
@@ -47,12 +48,12 @@ import { drawHighlight } from "../content/drawHighlight";
       highlightLayer,
     });
 
-    drawHighlight({ highlightLayer, rulerSize, stage });
+    drawHoverHighlight({ highlightLayer, rulerSize, stage });
+    // configMeasureElementsDistance(highlightLayer);
 
     window.addEventListener("resize", () => {
       stage.width(window.innerWidth);
       stage.height(window.innerHeight);
-      mainLayer.clear();
       mainLayer.clear();
       drawHorizontalRuler({ stage, mainLayer });
       drawVerticalRuler({ stage, mainLayer });

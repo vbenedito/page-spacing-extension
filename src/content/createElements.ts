@@ -2,6 +2,8 @@ import type { KonvaType } from "../utils/konvaInstance";
 
 export const createMainContainer = () => {
   const divRulerElement = document.createElement("div");
+  const HTMLTag = document.getElementsByTagName("body");
+
   divRulerElement.id = "ruler-container";
   divRulerElement.style.position = "fixed";
   divRulerElement.style.top = "0";
@@ -10,6 +12,9 @@ export const createMainContainer = () => {
   divRulerElement.style.width = "100vw";
   divRulerElement.style.height = "100vh";
   divRulerElement.style.pointerEvents = "auto";
+
+  HTMLTag[0].style.marginLeft = "35px";
+  HTMLTag[0].style.marginTop = "30px";
 
   document.body.appendChild(divRulerElement);
 };

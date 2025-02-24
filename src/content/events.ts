@@ -27,12 +27,19 @@ export const eventsHelper = ({
   component,
   eventName,
   callback,
+  componentType,
 }: {
   eventName: string;
   callback: () => void;
-  component: Line;
+  component?: Line;
+  componentType: "document" | "component";
 }) => {
-  component.on(eventName, callback);
+  const mapperComponents = {
+    document: document.addEventListener(eventName, callback),
+    component: component && component.on(eventName, callback),
+  };
+
+  mapperComponents[componentType];
 };
 
 export const mouseMoveEvent = ({

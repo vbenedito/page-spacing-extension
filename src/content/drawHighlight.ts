@@ -1,6 +1,7 @@
 import Konva from "konva";
 import { Layer } from "konva/lib/Layer";
 import { Stage } from "konva/lib/Stage";
+import { getElementInfo } from "./getElementStyles";
 
 const isCursorOnFixedLine = ({
   stage,
@@ -56,7 +57,7 @@ const updateRulerContainerStyle = ({
   }
 };
 
-export const drawHighlight = ({
+export const drawHoverHighlight = ({
   highlightLayer,
   rulerSize,
   stage,
@@ -66,6 +67,42 @@ export const drawHighlight = ({
   stage: Stage;
 }) => {
   let currentHighlight: Konva.Rect | null;
+  // Tooltip group to contain all parts
+  const tooltipGroup = new Konva.Group({
+    visible: false,
+  });
+
+  const tooltipBackground = new Konva.Rect({
+    width: 250,
+    height: 140,
+    fill: "rgba(50, 50, 50, 0.9)",
+    cornerRadius: 5,
+  });
+
+  const tooltipTitle = new Konva.Text({
+    text: "",
+    fontSize: 14,
+    fontFamily: "Arial",
+    fill: "#fff",
+    padding: 8,
+    width: 250,
+  });
+
+  const separator = new Konva.Line({
+    points: [0, 30, 250, 30], // Line coordinates
+    stroke: "#ccc",
+    strokeWidth: 1,
+  });
+
+  const detailsText = new Konva.Text({
+    text: "",
+    fontSize: 12,
+    fontFamily: "Arial",
+    fill: "#ddd",
+    padding: 5,
+    y: 20,
+    lineHeight: 1.5,
+  });
 
   document.addEventListener("mousemove", (event) => {
     const { clientX, clientY } = event;
@@ -98,14 +135,32 @@ export const drawHighlight = ({
           currentHighlight = null;
         }
 
+        const { elementTagName, elementInfos } = getElementInfo(element);
+
+        tooltipTitle.text(elementTagName);
+        detailsText.text(elementInfos);
+
         currentHighlight = new Konva.Rect({
           x: rect.left,
           y: rect.top,
           width: rect.width,
           height: rect.height,
-          stroke: "red",
+          stroke: "#390099",
           strokeWidth: 1,
         });
+
+        // Update tooltip position and show it
+        tooltipGroup.position({ x: clientX + 10, y: clientY + 10 });
+        tooltipGroup.visible(true);
+
+        // Add components to the group
+        tooltipGroup.add(
+          tooltipBackground,
+          tooltipTitle,
+          separator,
+          detailsText
+        );
+        highlightLayer.add(tooltipGroup);
 
         highlightLayer.add(currentHighlight);
         highlightLayer.draw();
