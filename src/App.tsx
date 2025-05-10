@@ -1,4 +1,4 @@
-import "./App.css";
+import "./styles/App.css";
 import { ACTIONS } from "./utils/constants";
 
 function App() {
